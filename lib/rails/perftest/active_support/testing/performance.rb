@@ -296,6 +296,38 @@ module ActiveSupport
           end
         end
 
+        class MonitoringTime < Time
+          attr_accessor :measure
+
+          def benchmark
+            ActiveSupport::Notifications.subscribe 'process_action.action_controller' do |_, start, finish, _, payload|
+              @total += case self
+              when DbRuntime
+                payload[:db_runtime].to_f / 1_000
+              when ViewRuntime
+                payload[:view_runtime].to_f / 1_000
+              else
+                (finish - start).to_f
+              end
+            end
+
+            yield
+
+            ActiveSupport::Notifications.unsubscribe 'process_action.action_controller'
+
+            @total.to_f
+          end
+        end
+
+        class DbRuntime < MonitoringTime
+        end
+
+        class ViewRuntime < MonitoringTime
+        end
+
+        class TotalRuntime < MonitoringTime
+        end
+
         # each implementation provides its own metrics like ProcessTime, Memory or GcRuns
       end
     end
