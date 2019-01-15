@@ -7,12 +7,12 @@ namespace :test do
 
   Rake::TestTask.new(benchmark: ['test:prepare', 'test:perftest:benchmark_mode']) do |t|
     t.libs << 'test'
-    t.pattern = 'test/performance/**/*_test.rb'
+    t.pattern = 'test/performance/**/*_benchmark.rb'
     t.warning = false
   end
 
   Rake::TestTask.new(profile: 'test:prepare') do |t|
     t.libs << 'test'
-    t.pattern = 'test/performance/**/*_test.rb'
+    t.pattern = 'test/performance/**/*_profile.rb'
   end
 end

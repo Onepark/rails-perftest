@@ -1,12 +1,12 @@
 module Rails
   module Generators
-    class PerformanceTestGenerator < NamedBase # :nodoc:
+    class PerformanceBenchmarkGenerator < NamedBase # :nodoc:
       check_class_collision suffix: "Test"
 
       source_root File.expand_path("../templates", __FILE__)
 
       def create_performance_test_file
-        template 'performance_test.rb', File.join('test/performance', class_path, "#{file_name}_test.rb")
+        template 'performance_benchmark.rb', File.join('test/performance', class_path, "#{file_name}_benchmark.rb")
       end
 
     end
