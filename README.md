@@ -279,6 +279,22 @@ depending on their mode and metric.
 
 In benchmarking mode, performance tests generate two types of outputs.
 
+#### Rails Runtime
+
+You can benchmark Rails runtime with the metrics `db_runtime`, `view_runtime` and `total_runtime`.
+
+Assertions are also available.
+
+```ruby
+test 'homepage' do
+  get_with_benchmark '/'
+
+  assert_runtime :db, :<=, 20
+  assert_runtime :view, :<=, 200
+  assert_runtime :total, :<=, 500
+end
+```
+
 ##### Command Line
 
 This is the primary form of output in benchmarking mode. Example:

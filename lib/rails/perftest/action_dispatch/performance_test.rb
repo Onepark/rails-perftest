@@ -1,4 +1,6 @@
 require 'rails/perftest/active_support/testing/performance'
+require 'rails/perftest/action_dispatch/integration/session'
+require 'rails/perftest/action_dispatch/response'
 
 module ActionDispatch
   # An integration test that runs a code profiler on your test methods.
@@ -16,5 +18,9 @@ module ActionDispatch
     else
       include Minitest511AndGreater
     end
+
+    autoload :TimeAssertions, File.expand_path(__dir__) + "/assertions/runtime"
+
+    include TimeAssertions
   end
 end
